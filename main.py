@@ -1,8 +1,10 @@
 from tkinter import *
+from tkinter import messagebox
 
 # ---------------------------- CONSTANTS ------------------------------- #
 
 WHITE = "#FFFFFF"
+
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 
@@ -13,10 +15,18 @@ def save():
     email = e_username_t.get()
     password = password_t.get()
 
-    with open("passwords.txt","a") as passwords_txt:
-        passwords_txt.write(f"{website} | {email} | {password}\n")
-    website_t.delete(0, END)
-    password_t.delete(0, END)
+    if len(website) < 1 or len(password) < 1:
+        messagebox.showerror(title="warning", message="The textboxes cannot be empty")
+    else:
+        is_ok = messagebox.askokcancel(title=website,
+                                       message=f"These are the details that you have entered: "
+                                               f"\nEmail: {email}\nPassword:{password}\nIs it ok to save?")
+        if is_ok:
+            with open("passwords.txt", "a") as passwords_txt:
+                passwords_txt.write(f"{website} | {email} | {password}\n")
+            website_t.delete(0, END)
+            password_t.delete(0, END)
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 
