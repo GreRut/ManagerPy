@@ -9,20 +9,12 @@ WHITE = "#FFFFFF"
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 
 def save():
-    passwords_txt = open("passwords.txt", "a")
     website = website_t.get()
-    passwords_txt.write(website)
-    passwords_txt.write(" | ")
-
     email = e_username_t.get()
-    passwords_txt.write(email)
-    passwords_txt.write(" | ")
-
     password = password_t.get()
-    passwords_txt.write(password)
-    passwords_txt.write("\n")
 
-    passwords_txt.close()
+    with open("passwords.txt","a") as passwords_txt:
+        passwords_txt.write(f"{website} | {email} | {password}\n")
     website_t.delete(0, END)
     password_t.delete(0, END)
 
